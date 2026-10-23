@@ -1,15 +1,15 @@
-# Auto Rent — Agence de location de voitures
+# 🚗 Auto Rent — Agence de location de voitures
 
-## Présentation
+## 📌 Présentation
 
 Auto Rent est un site web statique de location de voitures. Il permet de consulter un catalogue de véhicules, choisir un véhicule selon sa catégorie, calculer le prix d’une location et générer un devis.
 
-## Membres du groupe
+## 👥 Membres du groupe
 
 - Ahmed Hammemi
 - [Ajouter un deuxième membre si nécessaire]
 
-## Technologies utilisées
+## 🛠️ Technologies utilisées
 
 - HTML5
 - CSS3
@@ -21,7 +21,7 @@ Auto Rent est un site web statique de location de voitures. Il permet de consult
 - CSV
 - localStorage
 
-## Fonctionnalités
+## ✨ Fonctionnalités
 
 - Présentation des catégories de véhicules
 - Catalogue chargé depuis le fichier `data/vehicles.csv`
@@ -34,7 +34,7 @@ Auto Rent est un site web statique de location de voitures. Il permet de consult
 - Génération d’un devis après la réservation
 - Impression du devis
 
-## Arborescence du projet
+## 📁 Arborescence du projet
 
 ```text
 Location voitures/
@@ -58,7 +58,7 @@ Location voitures/
     └── yaris.jpg
 ```
 
-## Lancer le projet
+## ▶️ Lancer le projet
 
 1. Ouvrir le dossier du projet dans Visual Studio Code.
 2. Ouvrir le fichier `index 3.html`.
@@ -67,7 +67,7 @@ Location voitures/
 
 Live Server est nécessaire pour permettre à JavaScript de charger le fichier `data/vehicles.csv`.
 
-## Tests réalisés
+## ✅ Tests réalisés
 
 - Chargement des 50 véhicules depuis le fichier CSV
 - Recherche, tri et pagination dans le catalogue
@@ -78,23 +78,23 @@ Live Server est nécessaire pour permettre à JavaScript de charger le fichier `
 - Validation du formulaire de contact
 - Génération et impression du devis
 
-## Améliorations réalisées avec l’aide de l’IA
+## 🤖 Améliorations réalisées avec l’aide de l’IA
 
-### 1. Chargement du catalogue depuis un fichier CSV
+### 1. 📊 Chargement du catalogue depuis un fichier CSV
 
 - **Prompt utilisé :** Charger le catalogue des véhicules depuis un fichier CSV contenant au moins 50 véhicules.
 - **Proposition :** Lire le fichier `data/vehicles.csv` avec JavaScript et générer automatiquement le catalogue.
 - **Version intégrée :** Le fichier `script3.js` charge les données du CSV et remplit le tableau.
 - **Fonctionnement :** Les véhicules sont affichés à partir des données présentes dans le fichier CSV.
 
-### 2. Amélioration du design
+### 2. 🎨 Amélioration du design
 
 - **Prompt utilisé :** Améliorer le design CSS pour rendre le site plus élégant et attirant.
 - **Proposition :** Utiliser une palette de couleurs vert profond et doré, améliorer les cartes, les boutons et l’affichage sur mobile.
 - **Version intégrée :** Les styles sont ajoutés dans `index 3.html`.
 - **Fonctionnement :** Le CSS personnalise l’apparence du site sans modifier les fonctionnalités JavaScript.
 
-### 3. Création et impression d’un devis
+### 3. 🧾 Création et impression d’un devis
 
 - **Prompt utilisé :** Créer une page de devis affichant les informations de réservation et ajouter un bouton pour l’imprimer.
 - **Proposition :** Enregistrer temporairement les informations de réservation dans le navigateur et les afficher dans une page dédiée.
