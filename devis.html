@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Devis — Auto Rent</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
+          rel="stylesheet"
+          integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB"
+          crossorigin="anonymous">
+
+    <style>
+        body {
+            background: #f4f7fb;
+            color: #263445;
+            font-family: Arial, sans-serif;
+        }
+
+        .navbar,
+        footer {
+            background: #102a43;
+        }
+
+        .devis {
+            max-width: 850px;
+            margin: 40px auto;
+            padding: 40px;
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 8px 24px #102a430f;
+        }
+
+        .devis h1,
+        .devis h2 {
+            color: #102a43;
+        }
+
+        .total {
+            border-top: 2px solid #102a43;
+            padding-top: 16px;
+            font-size: 1.4rem;
+            font-weight: bold;
+        }
+
+        @media print {
+            body {
+                background: white;
+            }
+
+            .navbar,
+            footer,
+            .no-print {
+                display: none !important;
+            }
+
+            .devis {
+                max-width: 100%;
+                margin: 0;
+                padding: 0;
+                border: 0;
+                box-shadow: none;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark no-print">
+        <div class="container">
+            <a class="navbar-brand fw-bold" href="index3.html">AUTO RENT</a>
+            <div class="navbar-nav ms-auto">
+                <a class="nav-link" href="index3.html">Accueil</a>
+                <a class="nav-link" href="contact.html">Contact</a>
+                <a class="nav-link active" href="devis.html">Devis</a>
+            </div>
+        </div>
+    </nav>
+
+    <main class="container">
+        <article class="devis">
+            <div class="text-center mb-4">
+                <h1>AUTO RENT</h1>
+                <h2>Devis de location</h2>
+                <p class="text-secondary mb-0">
+                    Devis généré le <span id="dateDevis"></span>
+                </p>
+            </div>
+
+            <hr>
+
+            <section class="mb-4">
+                <h2 class="h5">Client</h2>
+                <p class="mb-1"><strong>Nom :</strong> <span id="nomClient">—</span></p>
+                <p class="mb-1"><strong>Email :</strong> <span id="emailClient">—</span></p>
+                <p class="mb-1"><strong>Téléphone :</strong> <span id="telephoneClient">—</span></p>
+            </section>
+
+            <section class="mb-4">
+                <h2 class="h5">Véhicule</h2>
+                <p class="mb-1"><strong>Catégorie :</strong> <span id="categorieVoiture">—</span></p>
+                <p class="mb-1"><strong>Véhicule :</strong> <span id="nomVoiture">—</span></p>
+            </section>
+
+            <section class="mb-4">
+                <h2 class="h5">Location</h2>
+                <p class="mb-1"><strong>Du :</strong> <span id="dateDebut">—</span></p>
+                <p class="mb-1"><strong>Au :</strong> <span id="dateFin">—</span></p>
+                <p class="mb-1"><strong>Nombre de jours :</strong> <span id="nombreJours">—</span></p>
+                <p class="mb-1"><strong>Prix journalier :</strong> <span id="prixJournalier">—</span></p>
+            </section>
+
+            <p class="total">
+                TOTAL : <span id="prixTotal">—</span>
+            </p>
+
+            <p id="messageDevis" class="alert alert-info no-print d-none">
+                Aucune réservation enregistrée. Revenez au formulaire pour calculer un devis.
+            </p>
+
+            <div class="d-flex gap-2 no-print">
+                <button type="button" class="btn btn-primary" onclick="window.print()">
+                    Imprimer le devis
+                </button>
+                <a href="index 3.html#reservation" class="btn btn-outline-secondary">
+                    Retour à la réservation
+                </a>
+            </div>
+        </article>
+    </main>
+
+    <footer class="text-light text-center py-3 no-print">
+        <p class="mb-0">© 2026 Auto Rent — Agence de location de voitures</p>
+    </footer>
+
+    <script>
+        function afficher(id, valeur) {
+            document.getElementById(id).textContent = valeur || "—";
+        }
+
+        function formaterDate(date) {
+            if (!date) return "—";
+
+            var morceaux = date.split("-");
+            return morceaux.length === 3
+                ? morceaux[2] + "/" + morceaux[1] + "/" + morceaux[0]
+                : date;
+        }
+
+        document.getElementById("dateDevis").textContent =
+            new Date().toLocaleDateString("fr-FR");
+
+        var reservation = null;
+
+        try {
+            reservation = JSON.parse(
+                localStorage.getItem("reservationAutoRent")
+            );
+        } catch (erreur) {
+            reservation = null;
+        }
+
+        if (reservation) {
+            afficher("nomClient", reservation.nom);
+            afficher("emailClient", reservation.email);
+            afficher("telephoneClient", reservation.telephone);
+            afficher("categorieVoiture", reservation.categorie);
+            afficher("nomVoiture", reservation.voiture);
+            afficher("dateDebut", formaterDate(reservation.dateDebut));
+            afficher("dateFin", formaterDate(reservation.dateFin));
+            afficher("nombreJours", reservation.nombreJours);
+            afficher("prixJournalier", reservation.prixJournalier + " DT");
+            afficher("prixTotal", reservation.prixTotal + " DT");
+        } else {
+            document.getElementById("messageDevis").classList.remove("d-none");
+        }
+    </script>
+</body>
+</html>

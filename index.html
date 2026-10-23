@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Auto Rent - Location de voitures</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <!-- En-tête -->
+    <header>
+        <h1>AUTO <span>RENT</span></h1>
+        <p>Agence de location de voitures</p>
+    </header>
+
+    <!-- Navigation -->
+    <nav>
+        <a href="#accueil">Accueil</a>
+        <a href="#catalogue">Catalogue</a>
+        <a href="#prix">Prix</a>
+        <a href="#reservation">Réservation</a>
+    </nav>
+
+    <!-- Contenu principal -->
+    <main>
+
+        <!-- Accueil -->
+        <section id="accueil" class="hero">
+            <h2>Bienvenue chez Auto Rent</h2>
+            <p>
+                Auto Rent vous propose des voitures adaptées à vos besoins
+                pour vos déplacements professionnels ou personnels.
+            </p>
+            <a href="#reservation" class="cta">Réserver maintenant</a>
+        </section>
+
+        <!-- Véhicules par catégorie -->
+        <section id="categories">
+            <h2>Nos véhicules</h2>
+
+            <div class="categories">
+
+                <div class="category">
+                    <img src="images/clio.jpg" alt="Renault Clio">
+                    <div class="category-body">
+                        <span class="badge">Citadine</span>
+                        <h3>Renault Clio</h3>
+                        <p>
+                            Compacte et économique,
+                            idéale pour la ville.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="category">
+                    <img src="images/yaris.jpg" alt="Toyota Yaris">
+                    <div class="category-body">
+                        <span class="badge">Citadine</span>
+                        <h3>Toyota Yaris</h3>
+                        <p>
+                            Agile et fiable pour
+                            vos trajets quotidiens.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="category">
+                    <img src="images/passat.jpg" alt="Volkswagen Passat">
+                    <div class="category-body">
+                        <span class="badge">Berline</span>
+                        <h3>Volkswagen Passat</h3>
+                        <p>
+                            Confortable et spacieuse,
+                            adaptée aux longs trajets.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="category">
+                    <img src="images/mirai.jpg" alt="Toyota Mirai">
+                    <div class="category-body">
+                        <span class="badge">Berline</span>
+                        <h3>Toyota Mirai</h3>
+                        <p>
+                            Une berline moderne
+                            et silencieuse.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="category">
+                    <img src="images/jumpy.jpg" alt="Citroën Jumpy">
+                    <div class="category-body">
+                        <span class="badge">Commerciale</span>
+                        <h3>Citroën Jumpy</h3>
+                        <p>
+                            Un utilitaire pratique pour
+                            le transport de marchandises.
+                        </p>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- Catalogue -->
+        <section id="catalogue">
+            <h2>Catalogue des véhicules</h2>
+
+            <div class="table-wrap">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Catégorie</th>
+                            <th>Véhicule</th>
+                            <th>Puissance</th>
+                            <th>Prix / jour</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        <tr>
+                            <td>Citadine</td>
+                            <td>Renault Clio</td>
+                            <td>90 CV</td>
+                            <td>120 DT</td>
+                        </tr>
+                        <tr>
+                            <td>Citadine</td>
+                            <td>Toyota Yaris</td>
+                            <td>100 CV</td>
+                            <td>130 DT</td>
+                        </tr>
+                        <tr>
+                            <td>Berline</td>
+                            <td>Volkswagen Passat</td>
+                            <td>150 CV</td>
+                            <td>200 DT</td>
+                        </tr>
+                        <tr>
+                            <td>Berline</td>
+                            <td>Toyota Mirai</td>
+                            <td>182 CV</td>
+                            <td>180 DT</td>
+                        </tr>
+                        <tr>
+                            <td>Commerciale</td>
+                            <td>Citroën Jumpy</td>
+                            <td>120 CV</td>
+                            <td>150 DT</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- Prix -->
+        <section id="prix">
+            <h2>Prix</h2>
+            <p class="intro">
+                Les prix sont calculés en fonction du véhicule choisi
+                et du nombre de jours de location.
+            </p>
+        </section>
+
+        <!-- Réservation -->
+        <section id="reservation">
+            <h2>Réservation</h2>
+
+            <form id="reservationForm">
+
+                <div>
+                    <label for="nom">Nom et prénom :</label>
+                    <input type="text" id="nom" placeholder="Ex : Ahmed Ben Salah">
+                </div>
+
+                <div>
+                    <label for="email">Email :</label>
+                    <input type="email" id="email" placeholder="exemple@mail.com">
+                </div>
+
+                <div>
+                    <label for="telephone">Téléphone :</label>
+                    <input type="tel" id="telephone" placeholder="Ex : 20 123 456">
+                </div>
+
+                <div>
+                    <label for="categorie">Catégorie :</label>
+                    <select id="categorie">
+                        <option value="">-- Sélectionner --</option>
+                        <option value="citadine">Citadine</option>
+                        <option value="berline">Berline</option>
+                        <option value="commerciale">Commerciale</option>
+                    </select>
+                </div>
+
+                <div>
+                    <label for="voiture">Voiture :</label>
+                    <select id="voiture">
+                        <option value="">-- Sélectionner --</option>
+                        <option value="120">Renault Clio</option>
+                        <option value="130">Toyota Yaris</option>
+                        <option value="200">Volkswagen Passat</option>
+                        <option value="180">Toyota Mirai</option>
+                        <option value="150">Citroën Jumpy</option>
+                    </select>
+                </div>
+
+                <div>
+                    <label for="dateDebut">Date de début :</label>
+                    <input type="date" id="dateDebut">
+                </div>
+
+                <div>
+                    <label for="dateFin">Date de fin :</label>
+                    <input type="date" id="dateFin">
+                </div>
+
+                <div>
+                    <label for="prixTotal">Prix estimé :</label>
+                    <input type="text" id="prixTotal" readonly placeholder="0 DT">
+                </div>
+
+                <div class="actions">
+                    <button type="button" class="btn-secondary" onclick="calculerPrix()">Calculer le prix</button>
+                    <button type="submit" class="btn-primary">Réserver</button>
+                </div>
+
+                <p id="message"></p>
+
+            </form>
+        </section>
+
+    </main>
+
+    <!-- Pied de page -->
+    <footer>
+        <p>© 2026 Auto Rent - Agence de location de voitures</p>
+    </footer>
+
+    <script src="script.js"></script>
+
+</body>
+
+</html>

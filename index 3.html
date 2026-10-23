@@ -1,0 +1,574 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Auto Rent — Location de voitures</title>
+
+    <!-- Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
+          rel="stylesheet"
+          integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB"
+          crossorigin="anonymous">
+
+    <!-- Select2 -->
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css"
+          rel="stylesheet">
+
+    <!-- DataTables -->
+    <link href="https://cdn.datatables.net/1.13.8/css/dataTables.bootstrap5.min.css"
+          rel="stylesheet">
+
+    <style>
+        :root {
+            --vert: #153b35;
+            --vert-clair: #245c50;
+            --or: #c99a50;
+            --fond: #f5f4ef;
+            --texte: #26332f;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background: var(--fond);
+            color: var(--texte);
+            font-family: Arial, sans-serif;
+        }
+
+        /* Barre de navigation */
+        .navbar {
+            background: var(--vert);
+            box-shadow: 0 4px 18px rgba(21, 59, 53, 0.18);
+        }
+
+        .navbar-brand {
+            color: #fff !important;
+            font-weight: 800;
+            letter-spacing: 2px;
+        }
+
+        .navbar-brand span {
+            color: var(--or);
+        }
+
+        .nav-link {
+            color: rgba(255, 255, 255, 0.82) !important;
+            margin-left: 8px;
+            transition: color 0.2s ease;
+        }
+
+        .nav-link:hover {
+            color: var(--or) !important;
+        }
+
+        /* Sections */
+        main > section {
+            margin-top: 30px;
+            padding: 34px;
+            background: #fff;
+            border: 1px solid #ebe8df;
+            border-radius: 18px;
+            box-shadow: 0 12px 35px rgba(31, 48, 42, 0.06);
+        }
+
+        .section-label {
+            color: var(--or);
+            font-size: 0.78rem;
+            font-weight: 700;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        h1,
+        h2,
+        h3 {
+            color: var(--vert);
+            font-weight: 700;
+        }
+
+        /* Accueil */
+        .hero-title {
+            max-width: 720px;
+            font-size: clamp(2.2rem, 5vw, 3.6rem);
+            line-height: 1.1;
+        }
+
+        .hero-text {
+            max-width: 650px;
+            color: #68736e;
+            font-size: 1.08rem;
+            line-height: 1.7;
+        }
+
+        .btn {
+            border-radius: 9px;
+            font-weight: 700;
+            padding: 10px 18px;
+            transition: transform 0.2s ease, background-color 0.2s ease;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+        }
+
+        .btn-primary {
+            background: var(--vert);
+            border-color: var(--vert);
+        }
+
+        .btn-primary:hover {
+            background: var(--vert-clair);
+            border-color: var(--vert-clair);
+        }
+
+        .btn-outline-primary {
+            color: var(--vert);
+            border-color: var(--vert);
+        }
+
+        .btn-outline-primary:hover {
+            background: var(--vert);
+            border-color: var(--vert);
+        }
+
+        /* Carrousel */
+        .carousel {
+            overflow: hidden;
+            border-radius: 16px;
+            background: var(--vert);
+        }
+
+        .carousel-image {
+            width: 100%;
+            height: 420px;
+            object-fit: cover;
+            filter: brightness(0.68);
+        }
+
+        .carousel-caption h3 {
+            color: #fff;
+            font-size: clamp(1.6rem, 4vw, 2.5rem);
+            text-shadow: 0 2px 12px rgba(0, 0, 0, 0.6);
+        }
+
+        /* Cartes de catégories */
+        .card {
+            overflow: hidden;
+            border: 1px solid #eeeae0;
+            border-radius: 15px;
+            transition: transform 0.25s ease, box-shadow 0.25s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 16px 32px rgba(21, 59, 53, 0.12) !important;
+        }
+
+        .voiture-image {
+            height: 210px;
+            object-fit: cover;
+        }
+
+        .badge.text-bg-primary,
+        .badge.text-bg-success {
+            background: var(--vert) !important;
+        }
+
+        .badge.text-bg-warning {
+            background: var(--or) !important;
+            color: #fff !important;
+        }
+
+        /* Catalogue */
+        #tableCatalogue {
+            border-color: #e8e5dc;
+        }
+
+        #tableCatalogue thead th {
+            background: var(--vert);
+            color: #fff;
+            border-color: var(--vert);
+            padding: 14px;
+        }
+
+        /* Réservation */
+        #reservationForm {
+            border: 1px solid #ebe8df;
+            border-radius: 15px;
+            background: #fffefa;
+        }
+
+        .form-label {
+            color: var(--vert);
+            font-weight: 600;
+        }
+
+        .form-control,
+        .form-select {
+            min-height: 44px;
+            border-color: #dcded7;
+            border-radius: 8px;
+        }
+
+        .form-control:focus,
+        .form-select:focus {
+            border-color: var(--or);
+            box-shadow: 0 0 0 0.2rem rgba(201, 154, 80, 0.18);
+        }
+
+        /* Select2 */
+        .select2-container {
+            width: 100% !important;
+        }
+
+        .select2-container--default .select2-selection--single {
+            height: 44px;
+            padding: 7px 9px;
+            border-color: #dcded7;
+            border-radius: 8px;
+        }
+
+        .select2-container--default
+        .select2-selection--single
+        .select2-selection__arrow {
+            height: 42px;
+        }
+
+        /* Pied de page */
+        footer {
+            margin-top: 45px;
+            background: var(--vert);
+            color: #fff;
+        }
+
+        footer span {
+            color: var(--or);
+        }
+
+        @media (max-width: 576px) {
+            main > section {
+                padding: 21px;
+                margin-top: 20px;
+            }
+
+            .carousel-image {
+                height: 250px;
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            html {
+                scroll-behavior: auto;
+            }
+
+            *,
+            *::before,
+            *::after {
+                transition-duration: 0.01ms !important;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark sticky-top">
+        <div class="container">
+            <a class="navbar-brand" href="#accueil">AUTO <span>RENT</span></a>
+
+            <button class="navbar-toggler"
+                    type="button"
+                    data-bs-toggle="collapse"
+                    data-bs-target="#menu"
+                    aria-controls="menu"
+                    aria-expanded="false"
+                    aria-label="Ouvrir le menu">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="menu">
+                <ul class="navbar-nav ms-auto align-items-lg-center">
+                    <li class="nav-item"><a class="nav-link" href="#accueil">Accueil</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#categories">Catégories</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#catalogue">Catalogue</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#reservation">Réservation</a></li>
+                    <li class="nav-item"><a class="nav-link" href="contact.html">Contact</a></li>
+                    <li class="nav-item"><a class="nav-link" href="devis.html">Devis</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <main class="container">
+        <!-- Accueil -->
+        <section id="accueil">
+            <span class="section-label">Votre route, votre liberté</span>
+            <h1 class="hero-title mt-2">Louez la voiture qui vous ressemble.</h1>
+            <p class="hero-text mt-3">
+                Découvrez notre sélection de véhicules pour vos déplacements,
+                vos voyages et vos besoins professionnels.
+            </p>
+            <a href="#reservation" class="btn btn-primary mt-2">
+                Réserver un véhicule
+            </a>
+
+            <!-- Carrousel -->
+            <div id="carouselAccueil"
+                 class="carousel slide mt-4"
+                 data-bs-ride="carousel">
+                <div class="carousel-inner">
+                    <div class="carousel-item active">
+                        <img src="images/clio.jpg"
+                             class="d-block w-100 carousel-image"
+                             alt="Voiture citadine">
+                        <div class="carousel-caption d-none d-md-block">
+                            <h3>Agile en ville</h3>
+                        </div>
+                    </div>
+
+                    <div class="carousel-item">
+                        <img src="images/passat.jpg"
+                             class="d-block w-100 carousel-image"
+                             alt="Voiture berline">
+                        <div class="carousel-caption d-none d-md-block">
+                            <h3>Le confort sur la route</h3>
+                        </div>
+                    </div>
+
+                    <div class="carousel-item">
+                        <img src="images/jumpy.jpg"
+                             class="d-block w-100 carousel-image"
+                             alt="Véhicule commercial">
+                        <div class="carousel-caption d-none d-md-block">
+                            <h3>Prête pour vos projets</h3>
+                        </div>
+                    </div>
+                </div>
+
+                <button class="carousel-control-prev"
+                        type="button"
+                        data-bs-target="#carouselAccueil"
+                        data-bs-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Précédent</span>
+                </button>
+
+                <button class="carousel-control-next"
+                        type="button"
+                        data-bs-target="#carouselAccueil"
+                        data-bs-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Suivant</span>
+                </button>
+            </div>
+        </section>
+
+        <!-- Catégories -->
+        <section id="categories">
+            <span class="section-label">Notre sélection</span>
+            <h2 class="mb-4 mt-2">Trouvez votre catégorie</h2>
+
+            <div class="row g-4">
+                <div class="col-12 col-md-6 col-lg-4">
+                    <article class="card h-100 shadow-sm">
+                        <img src="images/clio.jpg"
+                             class="card-img-top voiture-image"
+                             alt="Voiture citadine">
+                        <div class="card-body p-4">
+                            <span class="badge text-bg-primary">Citadine</span>
+                            <h3 class="card-title h5 mt-3">Citadines</h3>
+                            <p class="card-text text-secondary">
+                                Compactes et économiques, idéales pour la ville.
+                            </p>
+                            <a href="#reservation" class="btn btn-outline-primary">
+                                Choisir cette catégorie
+                            </a>
+                        </div>
+                    </article>
+                </div>
+
+                <div class="col-12 col-md-6 col-lg-4">
+                    <article class="card h-100 shadow-sm">
+                        <img src="images/passat.jpg"
+                             class="card-img-top voiture-image"
+                             alt="Voiture berline">
+                        <div class="card-body p-4">
+                            <span class="badge text-bg-success">Berline</span>
+                            <h3 class="card-title h5 mt-3">Berlines</h3>
+                            <p class="card-text text-secondary">
+                                Confortables et spacieuses pour vos trajets.
+                            </p>
+                            <a href="#reservation" class="btn btn-outline-primary">
+                                Choisir cette catégorie
+                            </a>
+                        </div>
+                    </article>
+                </div>
+
+                <div class="col-12 col-md-6 col-lg-4">
+                    <article class="card h-100 shadow-sm">
+                        <img src="images/jumpy.jpg"
+                             class="card-img-top voiture-image"
+                             alt="Véhicule commercial">
+                        <div class="card-body p-4">
+                            <span class="badge text-bg-warning">Commerciale</span>
+                            <h3 class="card-title h5 mt-3">Véhicules commerciaux</h3>
+                            <p class="card-text text-secondary">
+                                Des utilitaires pratiques pour vos projets.
+                            </p>
+                            <a href="#reservation" class="btn btn-outline-primary">
+                                Choisir cette catégorie
+                            </a>
+                        </div>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <!-- Catalogue chargé depuis le CSV -->
+        <section id="catalogue">
+            <span class="section-label">Tous nos véhicules</span>
+            <h2 class="mb-2 mt-2">Catalogue</h2>
+            <p class="text-secondary">
+
+            </p>
+
+            <div class="table-responsive">
+                <table id="tableCatalogue"
+                       class="table table-striped table-hover align-middle w-100">
+                    <thead>
+                        <tr>
+                            <th>Catégorie</th>
+                            <th>Véhicule</th>
+                            <th>Puissance</th>
+                            <th>Prix / jour</th>
+                            <th>Disponibilité</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+
+            <p id="erreurCatalogue" class="text-danger" role="alert"></p>
+        </section>
+
+        <!-- Formulaire de réservation -->
+        <section id="reservation">
+            <span class="section-label">Planifiez votre trajet</span>
+            <h2 class="mb-4 mt-2">Votre réservation</h2>
+
+            <form id="reservationForm" class="card card-body p-4 shadow-sm">
+                <div class="row g-3">
+                    <div class="col-md-6">
+                        <label for="nom" class="form-label">Nom et prénom</label>
+                        <input type="text"
+                               class="form-control"
+                               id="nom"
+                               placeholder="Ex. : Ahmed Ben Salah"
+                               required>
+                    </div>
+
+                    <div class="col-md-6">
+                        <label for="email" class="form-label">Email</label>
+                        <input type="email"
+                               class="form-control"
+                               id="email"
+                               placeholder="exemple@mail.com"
+                               required>
+                    </div>
+
+                    <div class="col-md-6">
+                        <label for="telephone" class="form-label">Téléphone</label>
+                        <input type="tel"
+                               class="form-control"
+                               id="telephone"
+                               placeholder="Ex. : 20 123 456"
+                               required>
+                    </div>
+
+                    <div class="col-md-6">
+                        <label for="categorie" class="form-label">Catégorie</label>
+                        <select class="form-select" id="categorie" required>
+                            <option value=""></option>
+                        </select>
+                    </div>
+
+                    <div class="col-md-6">
+                        <label for="voiture" class="form-label">Voiture</label>
+                        <select class="form-select" id="voiture" required>
+                            <option value=""></option>
+                        </select>
+                    </div>
+
+                    <div class="col-md-6">
+                        <label for="prixJour" class="form-label">Prix par jour</label>
+                        <input type="text"
+                               class="form-control"
+                               id="prixJour"
+                               placeholder="0 DT"
+                               readonly>
+                    </div>
+
+                    <div class="col-md-6">
+                        <label for="dateDebut" class="form-label">Date de début</label>
+                        <input type="date"
+                               class="form-control"
+                               id="dateDebut"
+                               required>
+                    </div>
+
+                    <div class="col-md-6">
+                        <label for="dateFin" class="form-label">Date de fin</label>
+                        <input type="date"
+                               class="form-control"
+                               id="dateFin"
+                               required>
+                    </div>
+
+                    <div class="col-md-6">
+                        <label for="prixTotal" class="form-label">Prix estimé</label>
+                        <input type="text"
+                               class="form-control fw-bold"
+                               id="prixTotal"
+                               placeholder="0 DT"
+                               readonly>
+                    </div>
+
+                    <div class="col-12 mt-4">
+                        <button type="button"
+                                class="btn btn-outline-secondary"
+                                id="btnCalculer">
+                            Calculer le prix
+                        </button>
+                        <button type="submit" class="btn btn-primary ms-2">
+                            Valider et voir le devis
+                        </button>
+                    </div>
+
+                    <div class="col-12">
+                        <p id="message" class="mb-0" aria-live="polite"></p>
+                    </div>
+                </div>
+            </form>
+        </section>
+    </main>
+
+    <footer class="text-center py-4 mt-5">
+        <p class="mb-1 fw-bold">AUTO <span>RENT</span></p>
+        <p class="mb-0 small">© 2026 Auto Rent — Agence de location de voitures</p>
+    </footer>
+
+    <!-- Bibliothèques JavaScript -->
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
+            crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.8/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.8/js/dataTables.bootstrap5.min.js"></script>
+    <script src="script3.js"></script>
+</body>
+</html>
